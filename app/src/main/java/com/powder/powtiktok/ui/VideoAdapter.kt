@@ -1,11 +1,13 @@
 package com.powder.powtiktok.ui
 
 import android.net.Uri
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.powder.powtiktok.R
 import com.powder.powtiktok.databinding.VideItemBinding
 import com.powder.powtiktok.databinding.VideoItemBinding
 import com.powder.powtiktok.network.Video
@@ -27,6 +29,22 @@ class VideoAdapter : ListAdapter<Video, VideoAdapter.VideoViewHolder>(DiffCallba
             val videoView = binding.videoView
             videoView.setVideoURI(Uri.parse(video.videoUrl))
             videoView.start()
+            videoView.pause()
+            binding.buttonPlayPause.setImageResource(R.drawable.ic_baseline_play_arrow_24)
+            binding.buttonPlayPause.setOnClickListener {
+                var position = videoView.currentPosition;
+                Log.d("bro","${videoView.isPlaying}")
+                if (videoView.isPlaying){
+                    videoView.pause()
+                    binding.buttonPlayPause.setImageResource(R.drawable.ic_baseline_play_arrow_24)
+                }
+                else{
+                    videoView.seekTo(position)
+                    videoView.start()
+                    //videoView.resume() doesn't work
+                    binding.buttonPlayPause.setImageResource(R.drawable.ic_baseline_pause_24)
+                }
+            }
 
             binding.title.text =  video.title
         }

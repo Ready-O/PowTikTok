@@ -11,6 +11,16 @@
         android:layout_height="match_parent"
         />
 
+    <ImageButton
+        android:id="@+id/button_play_pause"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/video_view"
+        app:layout_constraintLeft_toLeftOf="@+id/video_view"
+        app:layout_constraintRight_toRightOf="@id/video_view"
+        android:layout_marginBottom="16dp"
+        />
+
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
