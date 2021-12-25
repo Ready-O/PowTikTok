@@ -10,8 +10,8 @@ import kotlinx.coroutines.launch
 
 class VideoViewModel: ViewModel() {
 
-    private val _status = MutableLiveData<String>()
-    val status: LiveData<String> = _status
+    private var _status = MutableLiveData<Boolean>()
+    val status: LiveData<Boolean> = _status
 
     private val _videos = MutableLiveData<List<Video>>()
     val videos: LiveData<List<Video>> = _videos
@@ -24,9 +24,9 @@ class VideoViewModel: ViewModel() {
         viewModelScope.launch {
             try {
                 _videos.value = Api.videoService.getVideos()
-                _status.value = "Success"
+                _status.value = true
             } catch (e: Exception) {
-                _status.value = "Failure: ${e.message}"
+                _status.value = false
             }
         }
     }

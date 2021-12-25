@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">PowTikTok</string>
+    <string name="play_pause_button_desc">Play/Pause Button</string>
 </resources>

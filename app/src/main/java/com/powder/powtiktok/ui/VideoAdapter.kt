@@ -1,7 +1,6 @@
 package com.powder.powtiktok.ui
 
 import android.net.Uri
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -31,7 +30,7 @@ class VideoAdapter : ListAdapter<Video, VideoAdapter.VideoViewHolder>(DiffCallba
             videoView.pause()
             binding.buttonPlayPause.setImageResource(R.drawable.ic_baseline_play_arrow_24)
             binding.buttonPlayPause.setOnClickListener {
-                var position = videoView.currentPosition;
+                val position = videoView.currentPosition
                 if (videoView.isPlaying){
                     videoView.pause()
                     binding.buttonPlayPause.setImageResource(R.drawable.ic_baseline_play_arrow_24)
@@ -54,11 +53,11 @@ class VideoAdapter : ListAdapter<Video, VideoAdapter.VideoViewHolder>(DiffCallba
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): VideoAdapter.VideoViewHolder {
+    ): VideoViewHolder {
         return VideoViewHolder(VideoItemBinding.inflate(LayoutInflater.from(parent.context),parent,false))
     }
 
-    override fun onBindViewHolder(holder: VideoAdapter.VideoViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: VideoViewHolder, position: Int) {
         //if (position == 1){
         val videoItem = getItem(position)
         holder.bind(videoItem)
