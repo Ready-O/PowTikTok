@@ -1,12 +1,14 @@
 package com.powder.powtiktok.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.powder.powtiktok.VideoViewModel
 import com.powder.powtiktok.databinding.FragmentVideoBinding
 
@@ -29,7 +31,8 @@ class VideoFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val recyclerView = binding.listVideosRecyclerview
-        recyclerView.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
+        val layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
+        recyclerView.layoutManager = layoutManager
 
         val adapter = VideoAdapter()
         recyclerView.adapter = adapter
@@ -40,6 +43,38 @@ class VideoFragment : Fragment() {
             }
         }
 
+        var currentItemIndex = 0
+
+        //RecyclerView scroll position
+        fun setRecyclerViewScrollListener() {
+            recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                    super.onScrollStateChanged(recyclerView, newState)
+                    // When the user lift his finger from the screen
+                    if (newState == RecyclerView.SCROLL_STATE_SETTLING){
+                        val firstVisible= layoutManager.findFirstVisibleItemPosition()
+                        if (firstVisible == 0 && currentItemIndex == 0){
+                            if (currentItemIndex < layoutManager.findLastVisibleItemPosition()){
+                                currentItemIndex++
+                            }
+                        }
+                        else if (currentItemIndex == layoutManager.itemCount - 1 && firstVisible == currentItemIndex){
+                            currentItemIndex = 0
+                        }
+                        else if (currentItemIndex <= firstVisible){
+                            currentItemIndex++
+                        }
+                        else {
+                            currentItemIndex--
+                        }
+                        recyclerView.smoothScrollToPosition(currentItemIndex)
+                    }
+                }
+
+            })
+        }
+
+        setRecyclerViewScrollListener()
 
     }
 }
